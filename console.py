@@ -11,10 +11,10 @@ classes = {
 
 class HBNBCommand(cmd.Cmd):
     """
-    This is defines an interactive shell for the AirBnB project
+    This defines an interactive shell for the AirBnB project
     """
 
-    intro = "Welcome the hbnb shell, type help or ? to list all commands\n"
+    intro = "Welcome to the hbnb shell, type help or ? to list all commands\n"
     prompt = "(hbnb) "
     file = None
 
