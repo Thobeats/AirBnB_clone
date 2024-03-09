@@ -13,7 +13,10 @@ class FileStorage:
     """
 
     def __init__(self):
-        self.__file_path = "airbnb.json"
+        """
+        initializes the FileStorage Class
+        """
+        self.__file_path = "file.json"
         self.__objects = {}
 
     def all(self):
