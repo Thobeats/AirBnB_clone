@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
-The BaseModel that defines all common
-methods and attributes for other classes
+    The BaseModel that defines all common
+    methods and attributes for other classes
 """
 
 from uuid import uuid4
@@ -10,7 +10,7 @@ from datetime import datetime
 
 class BaseModel:
     """
-    The BaseModel Class serves as a parent class for other classes
+        The BaseModel Class serves as a parent class for other classes
     """
 
     def __init__(self, *args, **kwargs):
