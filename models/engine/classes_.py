@@ -10,6 +10,5 @@ from models.user import User
 
 classes = {
     "basemodel": BaseModel,
-    "user" : User
+    "user": User
 }
-
