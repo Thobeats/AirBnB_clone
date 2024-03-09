@@ -11,9 +11,7 @@ class User(BaseModel):
     A user class that defines all clients of
     the Airbnb project
     """
-
-    def __init__(self):
-        """
-        initializes a new user
-        """
-        pass
+    email = ""
+    password = ""
+    first_name = ""
+    last_name = ""

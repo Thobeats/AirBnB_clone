@@ -6,6 +6,7 @@ and deserializes JSON FILE to instances
 
 import json
 from models.base_model import BaseModel
+from models.engine.classes_ import classes
 
 
 class FileStorage:
@@ -47,11 +48,13 @@ class FileStorage:
         """
         try:
             with open(self.__file_path, 'r') as fp:
-                allDicts = json.loads(fp.read())
+                allDicts = json.load(fp)
 
             self.__objects = {}
+
             for id, dict in allDicts.items():
-                cls = BaseModel(**dict)
+                cls_name = classes[dict['__class__'].lower()]
+                cls = cls_name(**dict)
                 self.__objects[id] = cls
         except FileNotFoundError:
             pass
