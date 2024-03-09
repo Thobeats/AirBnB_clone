@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-"""
-File storage class the serializes instances to JSON FIlE
+"""File storage class the serializes instances to JSON FIlE
 and deserializes JSON FILE to instances
 """
 

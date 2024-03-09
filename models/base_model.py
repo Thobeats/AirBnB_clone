@@ -56,6 +56,7 @@ class BaseModel:
         returns a dictionary containing all
         keys/values of __dict__ of the instance
         """
+
         dict_rep = {}
         time_format = datetime.isoformat
         for key in self.__dict__:

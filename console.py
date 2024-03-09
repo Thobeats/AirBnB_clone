@@ -19,11 +19,11 @@ class HBNBCommand(cmd.Cmd):
     file = None
 
     def do_EOF(self, arg):
-        'Quit command to exit the program'
+        """Quit command to exit the program"""
         return True
 
     def do_quit(self, arg):
-        'Quit command to exit the program'
+        """Quit command to exit the program"""
         return True
 
     def do_create(self, arg):
