@@ -4,10 +4,8 @@ The BaseModel that defines all common
 methods and attributes for other classes
 """
 
-import cmd
 from uuid import uuid4
 from datetime import datetime
-from models import storage
 
 
 class BaseModel:
@@ -19,6 +17,8 @@ class BaseModel:
         """
         initialises a new instance of the base class
         """
+        from models.__init__ import storage
+
         if kwargs and len(kwargs) > 0:
             for key, value in kwargs.items():
                 if key == "created_at" or key == "updated_at":
@@ -46,6 +46,8 @@ class BaseModel:
         """
         updates the value of updated_at
         """
+        from models.__init__ import storage
+
         self.updated_at = datetime.now()
         storage.save()
 
