@@ -16,5 +16,4 @@ class User(BaseModel):
         """
         initializes a new user
         """
-
-
+        pass

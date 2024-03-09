@@ -54,7 +54,7 @@ class FileStorage:
                 self.__objects[id] = cls
         except FileNotFoundError:
             pass
-    
+
     def delete_by_id(self, id):
         """
         deletes an instance by the id
