@@ -11,10 +11,10 @@ classes = {
 
 class HBNBCommand(cmd.Cmd):
     """
-    This is defines an interactive shell for the AirBnB project
+    This defines an interactive shell for the AirBnB project
     """
 
-    intro = "Welcome the hbnb shell, type help or ? to list all commands\n"
+    intro = "Welcome to the hbnb shell, type help or ? to list all commands\n"
     prompt = "(hbnb) "
     file = None
 
@@ -43,7 +43,6 @@ class HBNBCommand(cmd.Cmd):
         newObj = cls()
         newObj.save()
         print(newObj.id)
-            
 
     def do_show(self, arg):
         """
@@ -58,20 +57,20 @@ class HBNBCommand(cmd.Cmd):
 
         if self.class_exists(args['cls_name']):
             return
-        
+
         if self.instance_given(args['inst_id']):
             return
-        
+
         objects = storage.all()
         cls = classes[args['cls_name']]
         key = "{}.{}".format(cls.__name__, args['inst_id'])
-        
+
         if self.instance_exists(key, objects):
             return
-        
+
         inst = objects[key]
         print(inst)
-        
+
     def do_destroy(self, arg):
         """
         Deletes an instance based on the class name and
@@ -85,19 +84,19 @@ class HBNBCommand(cmd.Cmd):
 
         if self.class_exists(args['cls_name']):
             return
-        
+
         if self.instance_given(args['inst_id']):
             return
-        
+
         objects = storage.all()
         cls = classes[args['cls_name']]
         key = "{}.{}".format(cls.__name__, args['inst_id'])
-        
+
         if self.instance_exists(key, objects):
             return
 
         storage.delete_by_id(key)
-    
+
     def do_all(self, arg):
         """
         Prints all string representation of all instances
@@ -117,11 +116,11 @@ class HBNBCommand(cmd.Cmd):
             else:
                 for obj in objects:
                     cls = classes[args['cls_name']]
-                    if obj.split(".")[0] == cls.__name__:                        
+                    if obj.split(".")[0] == cls.__name__:
                         print_list = "{}".format(objects[obj])
                         allInstances.append(print_list)
 
-        print(allInstances)     
+        print(allInstances)
 
     def precmd(self, line):
         """
@@ -129,7 +128,7 @@ class HBNBCommand(cmd.Cmd):
         """
         line = line.lower()
         return line
-    
+
     @staticmethod
     def parse(arg):
         """
@@ -148,7 +147,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             args['inst_id'] = None
         return args
-    
+
     @staticmethod
     def class_exists(cls):
         """
@@ -157,7 +156,7 @@ class HBNBCommand(cmd.Cmd):
         if cls not in classes:
             print("** class doesn't exist **")
             return True
-    
+
     @staticmethod
     def instance_given(inst):
         """
@@ -175,6 +174,7 @@ class HBNBCommand(cmd.Cmd):
         if id not in obj.keys():
             print("** no instance found **")
             return True
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
