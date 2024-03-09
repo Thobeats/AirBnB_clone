@@ -32,6 +32,10 @@ class HBNBCommand(cmd.Cmd):
         """
         return True
 
+    def emptyline(self):
+        """Do nothing upon receiving an empty line."""
+        pass
+
     def do_create(self, arg):
         """
         creates an instance of the BaseModel class
@@ -43,7 +47,6 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
 
-        print(args)
         if self.class_not_exists(args['cls_name']):
             return
 
@@ -264,6 +267,7 @@ class HBNBCommand(cmd.Cmd):
         print(attr_val)
         inst[attr_name] = attr_val
         return inst
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
