@@ -23,11 +23,13 @@ class HBNBCommand(cmd.Cmd):
     file = None
 
     def do_EOF(self, arg):
-        """Quit command to exit the program"""
+        """Quit command to exit the program
+        """
         return True
 
     def do_quit(self, arg):
-        """Quit command to exit the program"""
+        """Quit command to exit the program
+        """
         return True
 
     def do_create(self, arg):
@@ -262,7 +264,6 @@ class HBNBCommand(cmd.Cmd):
         print(attr_val)
         inst[attr_name] = attr_val
         return inst
-
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
