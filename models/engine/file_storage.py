@@ -9,16 +9,14 @@ from models.base_model import BaseModel
 
 
 class FileStorage:
-    """
-    A class the serializes instances and deserializes JSON FIle
-    """
+    """Represent an abstracted storage engine.
 
-    def __init__(self):
-        """
-        initializes the FileStorage Class
-        """
-        self.__file_path = "file.json"
-        self.__objects = {}
+    Attributes:
+        __file_path (str): The name of the file to save objects to.
+        __objects (dict): A dictionary of instantiated objects.
+    """
+    __file_path = "file.json"
+    __objects = {}
 
     def all(self):
         """
