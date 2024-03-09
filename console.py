@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+"""
+Write a program called console.py that contains the
+entry point of the command interpreter:
+"""
 
 import cmd
 from models.base_model import BaseModel
@@ -36,7 +40,7 @@ class HBNBCommand(cmd.Cmd):
         if args['cls_name'] is None:
             print("** class name missing **")
             return
-        
+
         print(args)
         if self.class_not_exists(args['cls_name']):
             return
