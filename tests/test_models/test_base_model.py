@@ -4,8 +4,9 @@ import pep8
 
 from models.base_model import BaseModel
 
+
 class TestBase(unittest.TestCase):
-    
+
     def test__init__(self):
         """
         different tests for the id property
@@ -21,4 +22,5 @@ class TestBase(unittest.TestCase):
         """ test if the code follows pep8 codestyle """
         pepEightStyle = pep8.StyleGuide(quiet='true')
         result = pepEightStyle.check_files(['models/base_model.py'])
-        self.assertEqual(result.total_errors, 0, "Found code style errors (and warnings)")
+        error = "Found code style errors (and warnings)"
+        self.assertEqual(result.total_errors, 0, error)
