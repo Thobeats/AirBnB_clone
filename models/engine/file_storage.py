@@ -5,6 +5,7 @@ and deserializes JSON FILE to instances
 """
 
 import json
+from models.base_model import BaseModel
 
 
 class FileStorage:
@@ -46,7 +47,6 @@ class FileStorage:
         try:
             with open(self.__file_path, 'r') as fp:
                 allDicts = json.loads(fp.read())
-            from models.base_model import BaseModel
 
             self.__objects = {}
             for id, dict in allDicts.items():
