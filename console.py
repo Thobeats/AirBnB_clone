@@ -36,14 +36,13 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
 
-        if self.class_exists(arg):
+        if self.class_not_exists(arg):
             return
 
         cls = classes[arg]
         newObj = cls()
         newObj.save()
         print(newObj.id)
-            
 
     def do_show(self, arg):
         """
@@ -56,22 +55,22 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
 
-        if self.class_exists(args['cls_name']):
+        if self.class_not_exists(args['cls_name']):
             return
-        
-        if self.instance_given(args['inst_id']):
+
+        if self.instance_not_given(args['inst_id']):
             return
-        
+
         objects = storage.all()
         cls = classes[args['cls_name']]
         key = "{}.{}".format(cls.__name__, args['inst_id'])
-        
-        if self.instance_exists(key, objects):
+
+        if self.instance_not_exists(key, objects):
             return
-        
+
         inst = objects[key]
         print(inst)
-        
+
     def do_destroy(self, arg):
         """
         Deletes an instance based on the class name and
@@ -83,21 +82,21 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
 
-        if self.class_exists(args['cls_name']):
+        if self.class_not_exists(args['cls_name']):
             return
-        
-        if self.instance_given(args['inst_id']):
+
+        if self.instance_not_given(args['inst_id']):
             return
-        
+
         objects = storage.all()
         cls = classes[args['cls_name']]
         key = "{}.{}".format(cls.__name__, args['inst_id'])
-        
-        if self.instance_exists(key, objects):
+
+        if self.instance_not_exists(key, objects):
             return
 
         storage.delete_by_id(key)
-    
+
     def do_all(self, arg):
         """
         Prints all string representation of all instances
@@ -112,16 +111,53 @@ class HBNBCommand(cmd.Cmd):
                 print_list = "{}".format(objects[obj])
                 allInstances.append(print_list)
         else:
-            if self.class_exists(args['cls_name']):
+            if self.class_not_exists(args['cls_name']):
                 return
             else:
                 for obj in objects:
                     cls = classes[args['cls_name']]
-                    if obj.split(".")[0] == cls.__name__:                        
+                    if obj.split(".")[0] == cls.__name__:
                         print_list = "{}".format(objects[obj])
                         allInstances.append(print_list)
 
-        print(allInstances)     
+        print(allInstances)
+
+    def do_update(self, arg):
+        """
+        Updates an instance based on the class name and id
+        by adding or updating attribute (save the change into the JSON file).
+        Ex: $ update BaseModel 1234-1234-1234 email "aibnb@mail.com"
+        """
+        args = self.parse(arg)
+        objects = storage.all()
+
+        if args['cls_name'] is None:
+            print("** class name missing **")
+            return
+
+        if self.class_not_exists(args['cls_name']):
+            return
+
+        if self.instance_not_given(args['inst_id']):
+            return
+
+        cls = classes[args['cls_name']]
+        key = "{}.{}".format(cls.__name__, args['inst_id'])
+
+        if self.instance_not_exists(key, objects):
+            return
+
+        if self.attr_not_given(args['attr_name']):
+            return
+
+        if self.attrval_not_given(args['attr_val']):
+            return
+
+        objInstance = objects[key]
+        updated = self.updateFile(objInstance.to_dict(), args['attr_name'], args['attr_val'])
+        objects[key] = updated
+        print(objects)
+        #storage.save()
 
     def precmd(self, line):
         """
@@ -129,7 +165,7 @@ class HBNBCommand(cmd.Cmd):
         """
         line = line.lower()
         return line
-    
+
     @staticmethod
     def parse(arg):
         """
@@ -147,34 +183,83 @@ class HBNBCommand(cmd.Cmd):
             args['inst_id'] = argList[1]
         else:
             args['inst_id'] = None
+
+        if len(argList) >= 3:
+            args['attr_name'] = argList[2]
+        else:
+            args['attr_name'] = None
+
+        if len(argList) >= 4:
+            args['attr_val'] = argList[3]
+        else:
+            args['attr_val'] = None
+
         return args
-    
+
     @staticmethod
-    def class_exists(cls):
+    def class_not_exists(cls):
         """
         Checks if the class exists
         """
         if cls not in classes:
             print("** class doesn't exist **")
             return True
-    
+
     @staticmethod
-    def instance_given(inst):
+    def instance_not_given(inst):
         """
-        Checks if the class exists
+        Checks if the instance is given
         """
         if inst is None:
             print("** instance id missing **")
             return True
 
     @staticmethod
-    def instance_exists(id, obj):
+    def instance_not_exists(id, obj):
         """
         Checks if the id is an instance of the class
         """
         if id not in obj.keys():
             print("** no instance found **")
             return True
+
+    @staticmethod
+    def attr_not_given(attr):
+        """
+        Checks if the attribute name is given
+        """
+        if attr is None:
+            print("** attribute name missing **")
+            return True
+
+    @staticmethod
+    def attrval_not_given(attrval):
+        """
+        Checks if the attribute val is given
+        """
+        if attrval is None:
+            print("** value missing **")
+            return True
+
+    @staticmethod
+    def attr_not_exist(inst, attr):
+        """
+        Checks if the attribute name of instance exists
+        """
+        if attr not in inst:
+            print("** attribute name not found **")
+            return True
+
+    @staticmethod
+    def updateFile(inst, attr_name, attr_val):
+        """
+        update the instance with the new attribute
+        value
+        """
+        print(attr_val)
+        inst[attr_name] = attr_val
+        return inst
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
