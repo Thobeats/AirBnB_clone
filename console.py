@@ -32,14 +32,16 @@ class HBNBCommand(cmd.Cmd):
         and saves it into the JSON file
         Ex: create MyModel
         """
-        if arg is None or arg == "":
+        args = self.parse(arg)
+        if args['cls_name'] is None:
             print("** class name missing **")
             return
-
-        if self.class_not_exists(arg):
+        
+        print(args)
+        if self.class_not_exists(args['cls_name']):
             return
 
-        cls = classes[arg]
+        cls = classes[args['cls_name']]
         newObj = cls()
         newObj.save()
         print(newObj.id)
@@ -159,7 +161,7 @@ class HBNBCommand(cmd.Cmd):
         """
         handles the command before it is being handled
         """
-        line = line.lower()
+        # line = line.lower()
         return line
 
     @staticmethod
@@ -167,6 +169,7 @@ class HBNBCommand(cmd.Cmd):
         """
         splits the string into different arguments
         """
+        arg = arg.lower()
         argList = arg.split()
         args = {}
 
