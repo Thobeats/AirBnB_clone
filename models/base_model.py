@@ -43,9 +43,7 @@ class BaseModel:
             self.__dict__))
 
     def save(self):
-        """
-        updates the value of updated_at
-        """
+        """updates the value of updated_at"""
         from models.__init__ import storage
 
         self.updated_at = datetime.now()
