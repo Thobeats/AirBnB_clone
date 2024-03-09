@@ -1,6 +1,6 @@
-<h1 align="center" id="title">AirBnB</h1>
+<h1 align = "center" id = "title">AirBnB</h1>
 
-<p id="description">A web application where people can book an apartment</p>
+<p id = "description">A web application where people can book an apartment</p>
 
 <h2>Feature 1: The Console</h2>
 

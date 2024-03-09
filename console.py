@@ -153,11 +153,7 @@ class HBNBCommand(cmd.Cmd):
         if self.attrval_not_given(args['attr_val']):
             return
 
-        objInstance = objects[key]
-        updated = self.updateFile(objInstance.to_dict(), args['attr_name'], args['attr_val'])
-        objects[key] = updated
-        print(objects)
-        #storage.save()
+        # storage.save()
 
     def precmd(self, line):
         """
