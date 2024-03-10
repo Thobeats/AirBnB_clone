@@ -5,8 +5,7 @@ and deserializes JSON FILE to instances
 """
 
 import json
-from models.base_model import BaseModel
-from models.engine.classes_ import classes
+from .classes_ import classes
 
 
 class FileStorage:
