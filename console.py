@@ -74,7 +74,7 @@ class HBNBCommand(cmd.Cmd):
 
         if self.instance_not_exists(key, objects):
             return
-
+        
         inst = objects[key]
         print(inst)
 
