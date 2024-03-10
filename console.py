@@ -8,6 +8,7 @@ import cmd
 from models import storage
 from models.engine.classes_ import classes
 
+
 class HBNBCommand(cmd.Cmd):
     """
     This defines an interactive shell for the AirBnB project
