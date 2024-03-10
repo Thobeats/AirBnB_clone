@@ -5,13 +5,8 @@ entry point of the command interpreter:
 """
 
 import cmd
-from models.base_model import BaseModel
 from models import storage
-
-classes = {
-    "basemodel": BaseModel
-}
-
+from models.engine.classes_ import classes
 
 class HBNBCommand(cmd.Cmd):
     """
