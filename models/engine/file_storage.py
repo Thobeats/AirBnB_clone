@@ -49,8 +49,6 @@ class FileStorage:
             with open(self.__file_path, 'r') as fp:
                 allDicts = json.load(fp)
 
-            self.__objects = {}
-
             for id, dict in allDicts.items():
                 cls_name = classes[dict['__class__'].lower()]
                 cls = cls_name(**dict)
