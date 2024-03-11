@@ -87,6 +87,6 @@ class TestUser(unittest.TestCase):
     def test_pepEight_code_style(self):
         """ test if the code follows pep8 codestyle """
         pepEightStyle = pep8.StyleGuide(quiet='true')
-        result = pepEightStyle.check_files(['models/base_model.py'])
+        result = pepEightStyle.check_files(['models/user.py'])
         error = "Found code style errors (and warnings)"
         self.assertEqual(result.total_errors, 0, error)
