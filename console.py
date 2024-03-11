@@ -14,7 +14,7 @@ class HBNBCommand(cmd.Cmd):
     This defines an interactive shell for the AirBnB project
     """
 
-    intro = "Welcome to the hbnb shell, type help or ? to list all commands\n"
+    # intro = "Welcome to the hbnb shell, type help or ? to list all commands\n"
     prompt = "(hbnb) "
     file = None
 
