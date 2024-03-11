@@ -5,6 +5,7 @@ entry point of the command interpreter:
 """
 
 import cmd
+import re
 from models import storage
 from models.engine.classes_ import classes
 
@@ -160,7 +161,7 @@ class HBNBCommand(cmd.Cmd):
         if self.attrval_not_given(args['attr_val']):
             return
 
-        # storage.save()
+        self.updateFile(key, args)
 
     def precmd(self, line):
         """
@@ -174,9 +175,15 @@ class HBNBCommand(cmd.Cmd):
         """
         splits the string into different arguments
         """
-        arg = arg.lower()
-        argList = arg.split()
+        quotes = re.search(r'\"(.*?)\"', arg)
         args = {}
+
+        if quotes is None:
+            argList = arg.split()
+        else:
+            lexer = arg[:quotes.span()[0]].split()
+            argList = [i.strip(",") for i in lexer]
+            argList.append(quotes.group())
 
         if len(argList) >= 1:
             args['cls_name'] = argList[0]
@@ -255,14 +262,15 @@ class HBNBCommand(cmd.Cmd):
             return True
 
     @staticmethod
-    def updateFile(inst, attr_name, attr_val):
+    def updateFile(key, args):
         """
         update the instance with the new attribute
         value
         """
-        print(attr_val)
-        inst[attr_name] = attr_val
-        return inst
+        objects = storage.all()
+        objectDict = objects[key].__dict__
+        objectDict[args['attr_name']] = args['attr_val'].strip('"')
+        storage.save()
 
 
 if __name__ == '__main__':

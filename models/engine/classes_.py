@@ -14,11 +14,11 @@ from models.amenity import Amenity
 
 
 classes = {
-    "basemodel": BaseModel,
-    "user": User,
-    "amenity": Amenity,
-    "state": State,
-    "city": City,
-    "place": Place,
-    "review": Review
+    "BaseModel": BaseModel,
+    "User": User,
+    "Amenity": Amenity,
+    "State": State,
+    "City": City,
+    "Place": Place,
+    "Review": Review
 }

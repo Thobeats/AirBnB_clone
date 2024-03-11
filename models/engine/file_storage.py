@@ -50,7 +50,7 @@ class FileStorage:
                 allDicts = json.load(fp)
 
             for id, dict in allDicts.items():
-                cls_name = classes[dict['__class__'].lower()]
+                cls_name = classes[dict['__class__']]
                 cls = cls_name(**dict)
                 self.__objects[id] = cls
         except FileNotFoundError:
