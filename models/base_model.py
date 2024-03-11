@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-The BaseModel that defines all common
+The BaseModel defines all common
 methods and attributes for other classes
 """
 
@@ -10,7 +10,7 @@ from datetime import datetime
 
 class BaseModel:
     """
-    The BaseModel Class serves as a parent class for other classes
+        The BaseModel Class serves as a parent class for other classes
     """
 
     def __init__(self, *args, **kwargs):
@@ -43,9 +43,7 @@ class BaseModel:
             self.__dict__))
 
     def save(self):
-        """
-        updates the value of updated_at
-        """
+        """updates the value of updated_at"""
         from models.__init__ import storage
 
         self.updated_at = datetime.now()

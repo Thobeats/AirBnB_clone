@@ -1,20 +1,22 @@
 #!/usr/bin/python3
-"""File storage class the serializes instances to JSON FIlE
+"""
+File storage class the serializes instances to JSON FIlE
 and deserializes JSON FILE to instances
 """
 
 import json
-from models.base_model import BaseModel
+from .classes_ import classes
 
 
 class FileStorage:
-    """
-    A class the serializes instances and deserializes JSON FIle
-    """
+    """Represent an abstracted storage engine.
 
-    def __init__(self):
-        self.__file_path = "airbnb.json"
-        self.__objects = {}
+    Attributes:
+        __file_path (str): The name of the file to save objects to.
+        __objects (dict): A dictionary of instantiated objects.
+    """
+    __file_path = "file.json"
+    __objects = {}
 
     def all(self):
         """
@@ -45,11 +47,11 @@ class FileStorage:
         """
         try:
             with open(self.__file_path, 'r') as fp:
-                allDicts = json.loads(fp.read())
+                allDicts = json.load(fp)
 
-            self.__objects = {}
             for id, dict in allDicts.items():
-                cls = BaseModel(**dict)
+                cls_name = classes[dict['__class__'].lower()]
+                cls = cls_name(**dict)
                 self.__objects[id] = cls
         except FileNotFoundError:
             pass
