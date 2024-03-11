@@ -13,7 +13,6 @@ from models.state import State
 from models.amenity import Amenity
 
 
-
 classes = {
     "basemodel": BaseModel,
     "user": User,
