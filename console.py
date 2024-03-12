@@ -71,11 +71,9 @@ class HBNBCommand(cmd.Cmd):
 
         objects = storage.all()
         cls = classes[args['cls_name']]
-        key = "{}.{}".format(cls.__name__, args['inst_id'])
-
+        key = "{}.{}".format(cls.__name__, args['inst_id'].strip("\""))
         if self.instance_not_exists(key, objects):
             return
-
         inst = objects[key]
         print(inst)
 
