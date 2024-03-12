@@ -7,6 +7,7 @@ import cmd
 import re
 from models import storage
 from models.engine.classes_ import classes
+import json
 
 
 class HBNBCommand(cmd.Cmd):
@@ -225,11 +226,22 @@ class HBNBCommand(cmd.Cmd):
             argList = arg.split()
         else:
             lexer = arg[:quotes.span()[0]].split()
-            after = arg[quotes.span()[1] + 1:].split()
+            after = arg[quotes.span()[1] + 1:]
             argList = [i.strip(",") for i in lexer]
             argList.append(quotes.group())
-            for i in after:
-                argList.append(i.strip(","))
+            curlyBraces = re.search(r'\{(.*?)\}', after)
+            if curlyBraces is None:
+                for i in after.split():
+                    argList.append(i.strip(","))
+            else:
+                jsonLoaded = json.loads(curlyBraces.group())
+                argI = []
+                argJ = []
+                for i, j in jsonLoaded.items():
+                    argI.append(i)
+                    argJ.append(j)
+                argList.append(argI)
+                argList.append(argJ)
 
         if len(argList) >= 1:
             args['cls_name'] = argList[0]
@@ -237,12 +249,12 @@ class HBNBCommand(cmd.Cmd):
             args['cls_name'] = None
 
         if len(argList) >= 2:
-            args['inst_id'] = argList[1].strip("\"")
+            args['inst_id'] = argList[1]
         else:
             args['inst_id'] = None
 
         if len(argList) >= 3:
-            args['attr_name'] = argList[2].strip("\"")
+            args['attr_name'] = argList[2]
         else:
             args['attr_name'] = None
 
@@ -315,7 +327,11 @@ class HBNBCommand(cmd.Cmd):
         """
         objects = storage.all()
         objectDict = objects[key].__dict__
-        objectDict[args['attr_name']] = args['attr_val'].strip('"')
+        if isinstance(args['attr_name'], list):
+            for i in range(len(args['attr_name'])):
+                objectDict[args['attr_name'][i]] = args['attr_val'][i]
+        else:
+            objectDict[args['attr_name'].strip('"')] = args['attr_val'].strip('"')
         storage.save()
 
 
