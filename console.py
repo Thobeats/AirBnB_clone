@@ -219,29 +219,32 @@ class HBNBCommand(cmd.Cmd):
         """
         splits the string into different arguments
         """
-        quotes = re.search(r'\"(.*?)\"', arg)
+        checkCurlyBraces = re.search(r'\{(.*?)\}', arg)
         args = {}
 
-        if quotes is None:
-            argList = arg.split()
-        else:
-            lexer = arg[:quotes.span()[0]].split()
-            after = arg[quotes.span()[1] + 1:]
-            argList = [i.strip(",") for i in lexer]
-            argList.append(quotes.group())
-            curlyBraces = re.search(r'\{(.*?)\}', after)
-            if curlyBraces is None:
-                for i in after.split():
-                    argList.append(i.strip(","))
+        if checkCurlyBraces is None:
+            checkQuotes = re.search(r'\"(.*?)\"', arg)
+            if checkQuotes is None:
+                argList = arg.split()
             else:
-                jsonLoaded = json.loads(curlyBraces.group())
-                argI = []
-                argJ = []
-                for i, j in jsonLoaded.items():
-                    argI.append(i)
-                    argJ.append(j)
-                argList.append(argI)
-                argList.append(argJ)
+                lexer = arg[:checkQuotes.span()[0]].split()
+                after = arg[checkQuotes.span()[1] + 1:]
+                argList = [i.strip(",") for i in lexer]
+                argList.append(checkQuotes.group())
+                for i in after.split(","):
+                    argList.append(i.strip().strip("\""))
+        else:
+            lexer = arg[:checkCurlyBraces.span()[0]].split()
+            argList = [i.strip(",") for i in lexer]
+            new_string = checkCurlyBraces.group().replace("'", "\"")
+            jsonLoaded = json.loads(new_string)
+            argI = []
+            argJ = []
+            for i, j in jsonLoaded.items():
+                argI.append(i)
+                argJ.append(j)
+            argList.append(argI)
+            argList.append(argJ)
 
         if len(argList) >= 1:
             args['cls_name'] = argList[0]
@@ -331,7 +334,8 @@ class HBNBCommand(cmd.Cmd):
             for i in range(len(args['attr_name'])):
                 objectDict[args['attr_name'][i]] = args['attr_val'][i]
         else:
-            objectDict[args['attr_name'].strip('"')] = args['attr_val'].strip('"')
+            attr_name = args['attr_name']
+            objectDict[attr_name.strip('"')] = args['attr_val'].strip('"')
         storage.save()
 
 
