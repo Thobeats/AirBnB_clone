@@ -130,6 +130,29 @@ class HBNBCommand(cmd.Cmd):
 
         print(allInstances)
 
+    def default(self, arg):
+        """
+        default behaviour of the console
+        """
+        argdict = {
+            "all": self.do_all,
+            "show": self.do_show,
+            "destroy": self.do_destroy,
+            "update": self.do_update
+        }
+        dotMatch = re.search(r"\.", arg)
+        if dotMatch is None:
+            print("*** Unknown syntax: {}".format(arg))
+            return False
+        else:
+            argl = [arg[:dotMatch.span()[0]], arg[dotMatch.span()[1]:]]
+            match = re.search(r"\((.*?)\)", argl[1])
+            if match is not None:
+                command = [argl[1][:match.span()[0]], match.group()[1:-1]]
+                if command[0] in argdict.keys():
+                    call = "{} {}".format(argl[0], command[1])
+                    return argdict[command[0]](call)
+
     def do_update(self, arg):
         """
         Updates an instance based on the class name and id
