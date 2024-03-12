@@ -138,7 +138,8 @@ class HBNBCommand(cmd.Cmd):
             "all": self.do_all,
             "show": self.do_show,
             "destroy": self.do_destroy,
-            "update": self.do_update
+            "update": self.do_update,
+            "count": self.do_count
         }
         dotMatch = re.search(r"\.", arg)
         if dotMatch is None:
@@ -152,6 +153,9 @@ class HBNBCommand(cmd.Cmd):
                 if command[0] in argdict.keys():
                     call = "{} {}".format(argl[0], command[1])
                     return argdict[command[0]](call)
+            else:
+                print("*** Unknown function: {}".format(arg))
+                return False
 
     def do_update(self, arg):
         """
@@ -185,6 +189,26 @@ class HBNBCommand(cmd.Cmd):
             return
 
         self.updateFile(key, args)
+
+    def do_count(self, arg):
+        """
+        Retrieve the number of instances of a class
+        """
+        args = self.parse(arg)
+        objects = storage.all()
+        count = 0
+
+        if args['cls_name'] is not None:
+            for obj in objects.keys():
+                if self.class_not_exists(args['cls_name']):
+                    return
+                else:
+                    for obj in objects:
+                        cls = classes[args['cls_name']]
+                        if obj.split(".")[0] == cls.__name__:
+                            count += 1
+        print(count)
+
 
     def precmd(self, line):
         """
