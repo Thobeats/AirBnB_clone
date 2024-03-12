@@ -3,7 +3,6 @@
 Write a program called console.py that contains the
 entry point of the command interpreter:
 """
-
 import cmd
 import re
 from models import storage
@@ -207,7 +206,6 @@ class HBNBCommand(cmd.Cmd):
                             count += 1
         print(count)
 
-
     def precmd(self, line):
         """
         handles the command before it is being handled
@@ -227,8 +225,11 @@ class HBNBCommand(cmd.Cmd):
             argList = arg.split()
         else:
             lexer = arg[:quotes.span()[0]].split()
+            after = arg[quotes.span()[1] + 1:].split()
             argList = [i.strip(",") for i in lexer]
             argList.append(quotes.group())
+            for i in after:
+                argList.append(i.strip(","))
 
         if len(argList) >= 1:
             args['cls_name'] = argList[0]
@@ -236,12 +237,12 @@ class HBNBCommand(cmd.Cmd):
             args['cls_name'] = None
 
         if len(argList) >= 2:
-            args['inst_id'] = argList[1]
+            args['inst_id'] = argList[1].strip("\"")
         else:
             args['inst_id'] = None
 
         if len(argList) >= 3:
-            args['attr_name'] = argList[2]
+            args['attr_name'] = argList[2].strip("\"")
         else:
             args['attr_name'] = None
 
