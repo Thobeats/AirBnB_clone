@@ -1,8 +1,14 @@
 .places{
     margin-top: 20px;
+    display: flexbox;
+    text-align: center;
 }
 
-h1{
+.places h1{
+    float: left;
+    text-align: left;
+    display: block;
+    width: 100%;
 	margin-top: 0px;
 	margin-left: 20px;
 	margin-bottom: 0px;
@@ -16,6 +22,7 @@ article{
     margin: 20px;
     border: 1px solid #FF5A5F;
     border-radius: 4px;
+
 }
 
 article h2{
